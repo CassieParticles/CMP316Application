@@ -6,6 +6,8 @@
 #include <graphicsEngine/VectorMathOverloads.h>
 #include <glfw3.h>
 
+#include <graphicsEngine/Pipeline/Shader.h>
+
 
 GameLoop::GameLoop():BaseGameLoop("Test window", 800, 600)
 {
@@ -47,4 +49,27 @@ void GameLoop::update()
 
 void GameLoop::render()
 {
+	window->clearBackBuffer();
+	window->bindRenderTarget();
+
+	view->updateView(deviceContext.Get());
+
+	inputLayout.useInputLayout(deviceContext.Get());
+	//mesh->useMesh(deviceContext.Get());
+
+	baseVertexShader->bindShader(deviceContext.Get());
+	baseVertexShader->bindShader(deviceContext.Get());
+
+
+
+	ID3D11Buffer* cBuffers[1]{ view->getCameraBuffer() };
+
+	deviceContext->VSSetConstantBuffers(0, 1, cBuffers);
+
+
+
+	//mesh2->useMesh(deviceContext.Get());
+	gameObject->getComponent<MeshComponent>()->Render();
+
+	window->presentBackBuffer();
 }
