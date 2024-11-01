@@ -1,6 +1,8 @@
 ﻿
 cmake_minimum_required (VERSION 3.8)
 
+list(APPEND GAME "Game/GameLoop.cpp")
+
 list(APPEND GAME "main.cpp")
 
 
