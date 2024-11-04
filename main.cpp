@@ -28,7 +28,7 @@ int main()
 {
 	GameLoop gameLoop{};
 
-	while (true)
+	while (!gameLoop.getShouldClose())
 	{
 		gameLoop.handleInput();
 		gameLoop.update();
