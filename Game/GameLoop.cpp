@@ -3,7 +3,7 @@
 #include <glfw3.h>
 
 #include <engine/ObjectStructure/GameObject.h>
-#include <engine/Rendering/MeshComponent.h>
+#include <engine/Rendering/Components/MeshComponent.h>
 
 #include <graphicsEngine/VectorMathOverloads.h>
 #include <graphicsEngine/Pipeline/Shader.h>
