@@ -12,21 +12,21 @@
 
 GameLoop::GameLoop():BaseGameLoop("Test window", 800, 600)
 {
-	//Create test game object
+	//Create test game object cube
 	gameObject = new GameObject{ device,deviceContext,renderer.get()};
 	MeshComponent* mesh = gameObject->addRenderComponent<MeshComponent>();
+	TransformComponent* cubeTrans = gameObject->getComponent<TransformComponent>();
+	cubeTrans->position.z = 2;
 	mesh->setMesh("Cube", meshLoader.get());
 
 	TransformComponent* transComp = gameObject->getComponent<TransformComponent>();
-	//transComp->scale.x = 200;
-	//transComp->scale.y = 200;
-	//transComp->scale.z = 200;
-	//transComp->position.x = -100;
-	//transComp->position.z = -100;
 
+	//Create camera object
 	cameraObject = new GameObject{ device,deviceContext,renderer.get()};
+	TransformComponent* cameraTrans = cameraObject->getComponent<TransformComponent>();
+	cameraTrans->position = { 0,0,0 };
 	CameraComponent* camera = cameraObject->addRenderComponent<CameraComponent>();
-	camera->setProjectionMatrixPespective(89.9f * 3.14159f / 180, window->getAspectRatio(), 0.1f, 1000.f);
+	camera->setProjectionMatrixPespective(89.9 * 3.14159f / 180, window->getAspectRatio(), 0.1f, 1000.f);
 }
 
 GameLoop::~GameLoop()
@@ -38,27 +38,34 @@ GameLoop::~GameLoop()
 void GameLoop::handleInput()
 {
 	BaseGameLoop::handleInput();
-	//if (input->getKeyDown(GLFW_KEY_D))
-	//{
-	//	view->setRotation(view->loadRotation() + DirectX::XMVECTOR{ 0, 0.00001f, 0, 0 });
-	//}
-	//if (input->getKeyDown(GLFW_KEY_A))
-	//{
-	//	view->setRotation(view->loadRotation() + DirectX::XMVECTOR{ 0, -0.00001f, 0, 0 });
-	//}
-	//if (input->getKeyDown(GLFW_KEY_W))
-	//{
-	//	view->setRotation(view->loadRotation() + DirectX::XMVECTOR{ -0.00001f, 0, 0, 0 });
-	//}
-	//if (input->getKeyDown(GLFW_KEY_S))
-	//{
-	//	view->setRotation(view->loadRotation() + DirectX::XMVECTOR{ 0.00001f, 0, 0, 0 });
-	//}
+	TransformComponent* cameraTrans = cameraObject->getComponent<TransformComponent>();
+	if (input->getKeyDown(GLFW_KEY_D))
+	{
+		cameraTrans->rotation.y += 0.001f;
+	}
+	if (input->getKeyDown(GLFW_KEY_A))
+	{
+		cameraTrans->rotation.y -= 0.001f;
+	}
+	if (input->getKeyDown(GLFW_KEY_W))
+	{
+		cameraTrans->rotation.x -= 0.001f;
+	}
+	if (input->getKeyDown(GLFW_KEY_S))
+	{
+		cameraTrans->rotation.x += 0.001f;
+	}
 }
 
 void GameLoop::update()
 {
-	gameObject->getComponent<TransformComponent>()->position.z+= 0.001f;
+	//cameraObject->getComponent<TransformComponent>()->position.y+= 0.0001f;
+	gameObject->getComponent<TransformComponent>()->rotation.x += 0.001f;
+	gameObject->getComponent<TransformComponent>()->rotation.y += 0.001f;
+	gameObject->getComponent<TransformComponent>()->rotation.z += 0.001f;
+
+	gameObject->getComponent<TransformComponent>()->position.z += 0.001f;
+	cameraObject->getComponent<TransformComponent>()->position.z += 0.001f;
 }
 
 void GameLoop::render()
@@ -66,20 +73,9 @@ void GameLoop::render()
 	window->clearBackBuffer();
 	window->bindRenderTarget();
 
-	cameraObject->getComponent<CameraComponent>()->Render();
-
-	//view->updateView(deviceContext.Get());
-
-	//inputLayout.useInputLayout(deviceContext.Get());
-
-	//baseVertexShader->bindShader(deviceContext.Get());
-	//basePixelShader->bindShader(deviceContext.Get());
-
-	//ID3D11Buffer* cBuffers[1]{ view->getCameraBuffer() };
-
-	//deviceContext->VSSetConstantBuffers(0, 1, cBuffers);
-
 	gameObject->getComponent<MeshComponent>()->Render();
+
+	cameraObject->getComponent<CameraComponent>()->Render();
 
 	renderer->draw();
 
