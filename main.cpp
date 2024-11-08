@@ -7,7 +7,6 @@
 
 int main()
 {
-
 	GameLoop gameLoop{};
 
 	while (!gameLoop.getShouldClose())

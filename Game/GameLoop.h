@@ -16,6 +16,7 @@ public:
 protected:
 
 	GameObject* gameObject;
+	GameObject* cameraObject;
 
 	View* view;
 
