@@ -14,6 +14,8 @@ public:
 	void update() override;
 	void render() override;
 protected:
+	double time{};
+	bool leftRight = false;
 
 	GameObject* gameObject;
 	GameObject* cameraObject;

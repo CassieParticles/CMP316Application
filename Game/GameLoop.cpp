@@ -27,6 +27,7 @@ GameLoop::GameLoop():BaseGameLoop("Test window", 800, 600)
 	cameraTrans->position = { 0,0,0 };
 	CameraComponent* camera = cameraObject->addRenderComponent<CameraComponent>();
 	camera->setProjectionMatrixPespective(89.9 * 3.14159f / 180, window->getAspectRatio(), 0.1f, 1000.f);
+
 }
 
 GameLoop::~GameLoop()
@@ -40,32 +41,40 @@ void GameLoop::handleInput()
 	TransformComponent* cameraTrans = cameraObject->getComponent<TransformComponent>();
 	if (input->getKeyDown(GLFW_KEY_D))
 	{
-		cameraTrans->rotation.y += 0.001f;
+		//cameraTrans->rotation.y += 0.001f;
+		std::cout << timer->getDeltaTime()<<'\n';
 	}
 	if (input->getKeyDown(GLFW_KEY_A))
 	{
-		cameraTrans->rotation.y -= 0.001f;
+		std::cout << timer->getDeltaTime() << '\n';
 	}
 	if (input->getKeyDown(GLFW_KEY_W))
 	{
-		cameraTrans->rotation.x -= 0.001f;
+		std::cout << timer->getDeltaTime() << '\n';
 	}
 	if (input->getKeyDown(GLFW_KEY_S))
 	{
-		cameraTrans->rotation.x += 0.001f;
+		std::cout << timer->getDeltaTime() << '\n';
 	}
 }
 
 void GameLoop::update()
 {
 	BaseGameLoop::handleInput();
-	//cameraObject->getComponent<TransformComponent>()->position.y+= 0.0001f;
-	gameObject->getComponent<TransformComponent>()->rotation.x += 0.001f;
-	gameObject->getComponent<TransformComponent>()->rotation.y += 0.001f;
-	gameObject->getComponent<TransformComponent>()->rotation.z += 0.001f;
+	gameObject->getComponent<TransformComponent>()->rotation.x += 2 * 3.14159f * timer->getDeltaTime() * (leftRight ? 1 : -1);
+	//gameObject->getComponent<TransformComponent>()->rotation.y += 2 * 3.14159f * timer->getDeltaTime();
+	//gameObject->getComponent<TransformComponent>()->rotation.z += 2 * 3.14159f * timer->getDeltaTime();
 
-	gameObject->getComponent<TransformComponent>()->position.z += 0.001f;
-	cameraObject->getComponent<TransformComponent>()->position.z += 0.001f;
+	gameObject->getComponent<TransformComponent>()->position.z += 1 * timer->getDeltaTime();
+	cameraObject->getComponent<TransformComponent>()->position.z += 1 * timer->getDeltaTime();
+
+	time += timer->getDeltaTime();
+	if (time > 1)
+	{
+		std::cout << "=======================1 second has passed==================\n";
+		time-=1;
+		leftRight = !leftRight;
+	}
 }
 
 void GameLoop::render()
@@ -78,7 +87,4 @@ void GameLoop::render()
 
 	//cameraObject->getComponent<CameraComponent>()->Render();
 
-	//TODO: Put these into Base game loop
-	renderer->draw();
-	window->presentBackBuffer();
 }

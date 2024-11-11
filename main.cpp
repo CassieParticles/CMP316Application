@@ -11,9 +11,7 @@ int main()
 
 	while (!gameLoop.getShouldClose())
 	{
-		gameLoop.handleInput();
-		gameLoop.update();
-		gameLoop.render();
+		gameLoop.loop();
 	}
 
 	return 0;
