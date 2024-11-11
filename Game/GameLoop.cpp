@@ -13,7 +13,7 @@
 GameLoop::GameLoop():BaseGameLoop("Test window", 800, 600)
 {
 	//Create test game object cube
-	gameObject = new GameObject{ device,deviceContext,renderer.get()};
+	gameObject = scene->createGameObject(0);
 	MeshComponent* mesh = gameObject->addRenderComponent<MeshComponent>();
 	TransformComponent* cubeTrans = gameObject->getComponent<TransformComponent>();
 	cubeTrans->position.z = 2;
@@ -22,7 +22,7 @@ GameLoop::GameLoop():BaseGameLoop("Test window", 800, 600)
 	TransformComponent* transComp = gameObject->getComponent<TransformComponent>();
 
 	//Create camera object
-	cameraObject = new GameObject{ device,deviceContext,renderer.get()};
+	cameraObject = scene->createGameObject(0);
 	TransformComponent* cameraTrans = cameraObject->getComponent<TransformComponent>();
 	cameraTrans->position = { 0,0,0 };
 	CameraComponent* camera = cameraObject->addRenderComponent<CameraComponent>();
@@ -31,8 +31,7 @@ GameLoop::GameLoop():BaseGameLoop("Test window", 800, 600)
 
 GameLoop::~GameLoop()
 {
-	delete gameObject;
-	delete cameraObject;
+
 }
 
 void GameLoop::handleInput()
@@ -59,6 +58,7 @@ void GameLoop::handleInput()
 
 void GameLoop::update()
 {
+	BaseGameLoop::handleInput();
 	//cameraObject->getComponent<TransformComponent>()->position.y+= 0.0001f;
 	gameObject->getComponent<TransformComponent>()->rotation.x += 0.001f;
 	gameObject->getComponent<TransformComponent>()->rotation.y += 0.001f;
@@ -70,14 +70,15 @@ void GameLoop::update()
 
 void GameLoop::render()
 {
+	BaseGameLoop::render();
 	window->clearBackBuffer();
 	window->bindRenderTarget();
 
-	gameObject->getComponent<MeshComponent>()->Render();
+	//gameObject->getComponent<MeshComponent>()->Render();
 
-	cameraObject->getComponent<CameraComponent>()->Render();
+	//cameraObject->getComponent<CameraComponent>()->Render();
 
+	//TODO: Put these into Base game loop
 	renderer->draw();
-
 	window->presentBackBuffer();
 }
