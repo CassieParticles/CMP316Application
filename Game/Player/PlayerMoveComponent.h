@@ -17,6 +17,7 @@ public:
 	void Update(Timer* timer) override;
 protected:
 	DirectX::XMFLOAT3 moveDirection;
+	DirectX::XMFLOAT2 rotateDirection;
 
 	friend class ControllerComponent;
 };

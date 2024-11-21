@@ -45,4 +45,11 @@ void ControllerComponent::Input(InputHandler* input)
 	{
 		playerMoveComp->moveDirection.x += 1;
 	}
+
+	//If mouse is centred, then rotate camera
+	if (input->getMouseCentred())
+	{
+		playerMoveComp->rotateDirection.x = input->getCursorY() / 100.0;
+		playerMoveComp->rotateDirection.y = input->getCursorX() / 100.0;
+	}
 }
