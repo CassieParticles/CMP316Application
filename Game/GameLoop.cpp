@@ -12,6 +12,7 @@
 
 GameLoop::GameLoop():BaseGameLoop("Test window", 800, 600)
 {
+	timer->setMaxFrameRate(150);
 	//Create test game object cube
 	gameObject = scene->createGameObject(0);
 	MeshComponent* mesh = gameObject->addRenderComponent<MeshComponent>();
@@ -27,7 +28,7 @@ GameLoop::GameLoop():BaseGameLoop("Test window", 800, 600)
 	cameraTrans->position = { 0,0,0 };
 	CameraComponent* camera = cameraObject->addRenderComponent<CameraComponent>();
 	camera->setProjectionMatrixPespective(89.9 * 3.14159f / 180, window->getAspectRatio(), 0.1f, 1000.f);
-
+	input->setMouseCentred(false);
 }
 
 GameLoop::~GameLoop()
@@ -38,23 +39,11 @@ GameLoop::~GameLoop()
 void GameLoop::handleInput()
 {
 	BaseGameLoop::handleInput();
-	TransformComponent* cameraTrans = cameraObject->getComponent<TransformComponent>();
-	if (input->getKeyDown(GLFW_KEY_D))
+
+	if (input->getKeyPressed(GLFW_KEY_L))
 	{
-		//cameraTrans->rotation.y += 0.001f;
-		std::cout << timer->getDeltaTime()<<'\n';
-	}
-	if (input->getKeyDown(GLFW_KEY_A))
-	{
-		std::cout << timer->getDeltaTime() << '\n';
-	}
-	if (input->getKeyDown(GLFW_KEY_W))
-	{
-		std::cout << timer->getDeltaTime() << '\n';
-	}
-	if (input->getKeyDown(GLFW_KEY_S))
-	{
-		std::cout << timer->getDeltaTime() << '\n';
+		input->setMouseCentred(!input->getMouseCentred());
+		std::cout << "Centred\n";
 	}
 }
 
@@ -62,19 +51,6 @@ void GameLoop::update()
 {
 	BaseGameLoop::handleInput();
 	gameObject->getComponent<TransformComponent>()->rotation.x += 2 * 3.14159f * timer->getDeltaTime() * (leftRight ? 1 : -1);
-	//gameObject->getComponent<TransformComponent>()->rotation.y += 2 * 3.14159f * timer->getDeltaTime();
-	//gameObject->getComponent<TransformComponent>()->rotation.z += 2 * 3.14159f * timer->getDeltaTime();
-
-	gameObject->getComponent<TransformComponent>()->position.z += 1 * timer->getDeltaTime();
-	cameraObject->getComponent<TransformComponent>()->position.z += 1 * timer->getDeltaTime();
-
-	time += timer->getDeltaTime();
-	if (time > 1)
-	{
-		std::cout << "=======================1 second has passed==================\n";
-		time-=1;
-		leftRight = !leftRight;
-	}
 }
 
 void GameLoop::render()
