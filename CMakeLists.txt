@@ -3,6 +3,9 @@ cmake_minimum_required (VERSION 3.8)
 
 list(APPEND GAME "Game/GameLoop.cpp")
 
+list(APPEND GAME "Game/Player/ControllerComponent.cpp")
+list(APPEND GAME "Game/Player/PlayerMoveComponent.cpp")
+
 list(APPEND GAME "main.cpp")
 
 

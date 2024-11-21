@@ -6,6 +6,10 @@
 #include <engine/Rendering/Components/MeshComponent.h>
 #include <engine/Rendering/Components/CameraComponent.h>
 
+#include <graphicsEngine/VectorMathOverloads.h>
+
+#include "Player/ControllerComponent.h"
+#include "Player/PlayerMoveComponent.h"
 
 GameLoop::GameLoop():BaseGameLoop("Test window", 800, 600)
 {
@@ -26,6 +30,9 @@ GameLoop::GameLoop():BaseGameLoop("Test window", 800, 600)
 	CameraComponent* camera = cameraObject->addRenderComponent<CameraComponent>();
 	camera->setProjectionMatrixPespective(89.9 * 3.14159f / 180, window->getAspectRatio(), 0.1f, 1000.f);
 	input->setMouseCentred(false);
+	cameraObject->addInputComponent<ControllerComponent>()->setMoveSpeed(5);
+	cameraObject->addUpdateComponent<PlayerMoveComponent>();
+
 }
 
 GameLoop::~GameLoop()
