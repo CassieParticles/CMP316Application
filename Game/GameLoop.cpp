@@ -4,9 +4,6 @@
 
 #include <engine/ObjectStructure/GameObject.h>
 #include <engine/Rendering/Components/MeshComponent.h>
-
-#include <graphicsEngine/VectorMathOverloads.h>
-#include <graphicsEngine/Pipeline/Shader.h>
 #include <engine/Rendering/Components/CameraComponent.h>
 
 
@@ -49,7 +46,7 @@ void GameLoop::handleInput()
 
 void GameLoop::update()
 {
-	BaseGameLoop::handleInput();
+	BaseGameLoop::update();
 	gameObject->getComponent<TransformComponent>()->rotation.x += 2 * 3.14159f * timer->getDeltaTime() * (leftRight ? 1 : -1);
 }
 
