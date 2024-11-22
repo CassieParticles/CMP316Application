@@ -43,18 +43,14 @@ GameLoop::~GameLoop()
 void GameLoop::handleInput()
 {
 	BaseGameLoop::handleInput();
-
-	if (input->getKeyPressed(GLFW_KEY_L))
-	{
-		input->setMouseCentred(!input->getMouseCentred());
-		std::cout << "Centred\n";
-	}
 }
 
 void GameLoop::update()
 {
 	BaseGameLoop::update();
-	gameObject->getComponent<TransformComponent>()->rotation.x += 2 * 3.14159f * timer->getDeltaTime() * (leftRight ? 1 : -1);
+	gameObject->getComponent<TransformComponent>()->rotation.x += 2 * 3.14159f * timer->getDeltaTime();
+	gameObject->getComponent<TransformComponent>()->rotation.y += 2 * 3.14159f * timer->getDeltaTime();
+	gameObject->getComponent<TransformComponent>()->rotation.z += 2 * 3.14159f * timer->getDeltaTime();
 }
 
 void GameLoop::render()
