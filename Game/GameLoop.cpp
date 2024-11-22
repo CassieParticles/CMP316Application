@@ -11,7 +11,7 @@
 #include "Player/ControllerComponent.h"
 #include "Player/PlayerMoveComponent.h"
 
-GameLoop::GameLoop():BaseGameLoop("Test window", 800, 600)
+GameLoop::GameLoop():BaseGameLoop("Test window", 1200, 1200)
 {
 	timer->setMaxFrameRate(150);
 	//Create test game object cube
@@ -48,9 +48,9 @@ void GameLoop::handleInput()
 void GameLoop::update()
 {
 	BaseGameLoop::update();
-	gameObject->getComponent<TransformComponent>()->rotation.x += 2 * 3.14159f * timer->getDeltaTime();
-	gameObject->getComponent<TransformComponent>()->rotation.y += 2 * 3.14159f * timer->getDeltaTime();
-	gameObject->getComponent<TransformComponent>()->rotation.z += 2 * 3.14159f * timer->getDeltaTime();
+	gameObject->getComponent<TransformComponent>()->rotation.x += 2 * 3.14159f * timer->getDeltaTime() * 0.25f;
+	gameObject->getComponent<TransformComponent>()->rotation.y += 2 * 3.14159f * timer->getDeltaTime() * 0.25f;
+	gameObject->getComponent<TransformComponent>()->rotation.z += 2 * 3.14159f * timer->getDeltaTime() * 0.25f;
 }
 
 void GameLoop::render()

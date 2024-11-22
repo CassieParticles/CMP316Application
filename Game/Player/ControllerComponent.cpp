@@ -31,22 +31,28 @@ void ControllerComponent::Input(InputHandler* input)
 
 	if (input->getKeyDown(GLFW_KEY_W))
 	{
-		playerMoveComp->moveDirection.z += 1;
+		playerMoveComp->moveDirection.z += moveSpeed;
 	}
 	if (input->getKeyDown(GLFW_KEY_S))
 	{
-		playerMoveComp->moveDirection.z -= 1;
+		playerMoveComp->moveDirection.z -= moveSpeed;
 	}
 	if (input->getKeyDown(GLFW_KEY_A))
 	{
-		playerMoveComp->moveDirection.x -= 1;
+		playerMoveComp->moveDirection.x -= moveSpeed;
 	}
 	if (input->getKeyDown(GLFW_KEY_D))
 	{
-		playerMoveComp->moveDirection.x += 1;
+		playerMoveComp->moveDirection.x += moveSpeed;
 	}
-
-	
+	if (input->getKeyDown(GLFW_KEY_Q))
+	{
+		playerMoveComp->moveDirection.y += moveSpeed;
+	}
+	if (input->getKeyDown(GLFW_KEY_E))
+	{
+		playerMoveComp->moveDirection.y -= moveSpeed;
+	}
 
 	//If mouse is centred, then rotate camera
 	if (input->getMouseCentred())

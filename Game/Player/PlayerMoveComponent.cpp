@@ -31,8 +31,10 @@ void PlayerMoveComponent::Update(Timer* timer)
 	//Translate camera
 	DirectX::XMVECTOR pos = DirectX::XMLoadFloat3(&transform->position);
 	DirectX::XMVECTOR travelDist = DirectX::XMLoadFloat3(&moveDirection);
+
+	DirectX::XMMATRIX rotationMat = DirectX::XMMatrixRotationAxis(DirectX::XMVectorSet(0, 1, 0, 0), transform->rotation.y);
 	
-	pos += travelDist * timer->getDeltaTime();
+	pos += DirectX::XMVector3Transform(travelDist, rotationMat) * timer->getDeltaTime();
 
 	DirectX::XMStoreFloat3(&transform->position, pos);
 	//Rotate camera
