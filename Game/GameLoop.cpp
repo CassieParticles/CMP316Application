@@ -11,6 +11,7 @@
 #include "Player/ControllerComponent.h"
 #include "Player/PlayerMoveComponent.h"
 
+
 GameLoop::GameLoop():BaseGameLoop("Test window", 1200, 1200)
 {
 	timer->setMaxFrameRate(150);
@@ -33,6 +34,7 @@ GameLoop::GameLoop():BaseGameLoop("Test window", 1200, 1200)
 	cameraObject->addInputComponent<ControllerComponent>()->setMoveSpeed(5);
 	cameraObject->addUpdateComponent<PlayerMoveComponent>();
 
+	textureLoader->addColour("Red", 1, 0, 0);
 }
 
 GameLoop::~GameLoop()
@@ -58,9 +60,4 @@ void GameLoop::render()
 	BaseGameLoop::render();
 	window->clearBackBuffer();
 	window->bindRenderTarget();
-
-	//gameObject->getComponent<MeshComponent>()->Render();
-
-	//cameraObject->getComponent<CameraComponent>()->Render();
-
 }
