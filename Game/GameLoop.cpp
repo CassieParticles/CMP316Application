@@ -18,7 +18,7 @@ GameLoop::GameLoop():BaseGameLoop("Test window", 1200, 1200)
 	textureLoader->loadTextureFromFile("Bunny", "Assets/bunny.png");
 	textureLoader->addColour("Red", 1, 0, 0);
 
-	timer->setMaxFrameRate(-1);
+	timer->setMaxFrameRate(150);
 
 	//Create test game object cube
 	gameObject = scene->CreateGameObject(0);
@@ -27,6 +27,25 @@ GameLoop::GameLoop():BaseGameLoop("Test window", 1200, 1200)
 	cubeTrans->position.z = 2;
 	mesh->setMesh("Cube", meshLoader.get());
 	mesh->setTexture("Bunny", textureLoader.get());
+
+	//Create test game object cube
+	gameObject2 = scene->CreateGameObject(0);
+	MeshComponent* mesh2 = gameObject2->addRenderComponent<MeshComponent>();
+	TransformComponent* cubeTrans2 = gameObject2->getComponent<TransformComponent>();
+	cubeTrans2->position.z = 2;
+	cubeTrans2->position.x = 2;
+	mesh2->setMesh("Cube", meshLoader.get());
+	mesh2->setTexture("Bunny", textureLoader.get());
+
+	//Create test game object cube
+	gameObject3 = scene->CreateGameObject(0);
+	MeshComponent* mesh3 = gameObject3->addRenderComponent<MeshComponent>();
+	TransformComponent* cubeTrans3 = gameObject3->getComponent<TransformComponent>();
+	cubeTrans3->position.z = 2;
+	cubeTrans3->position.x = -2;
+	mesh3->setMesh("Cube", meshLoader.get());
+	mesh3->setTexture("Bunny", textureLoader.get());
+	
 
 	TransformComponent* transComp = gameObject->getComponent<TransformComponent>();
 
@@ -49,6 +68,13 @@ GameLoop::~GameLoop()
 void GameLoop::handleInput()
 {
 	BaseGameLoop::handleInput();
+
+	if (input->getKeyPressed(GLFW_KEY_G))
+	{
+		std::cout << "Moved object\n";
+		gameObject = scene->moveGameObject(currentScene, 1 - currentScene, gameObject);
+		currentScene = 1 - currentScene;
+	}
 }
 
 void GameLoop::update()
@@ -57,6 +83,14 @@ void GameLoop::update()
 	gameObject->getComponent<TransformComponent>()->rotation.x += 2 * 3.14159f * timer->getDeltaTime() * 0.25f;
 	gameObject->getComponent<TransformComponent>()->rotation.y += 2 * 3.14159f * timer->getDeltaTime() * 0.25f;
 	gameObject->getComponent<TransformComponent>()->rotation.z += 2 * 3.14159f * timer->getDeltaTime() * 0.25f;
+
+	gameObject2->getComponent<TransformComponent>()->rotation.x += 2 * 3.14159f * timer->getDeltaTime() * 0.25f;
+	gameObject2->getComponent<TransformComponent>()->rotation.y += 2 * 3.14159f * timer->getDeltaTime() * 0.25f;
+	gameObject2->getComponent<TransformComponent>()->rotation.z += 2 * 3.14159f * timer->getDeltaTime() * 0.25f;
+
+	gameObject3->getComponent<TransformComponent>()->rotation.x += 2 * 3.14159f * timer->getDeltaTime() * 0.25f;
+	gameObject3->getComponent<TransformComponent>()->rotation.y += 2 * 3.14159f * timer->getDeltaTime() * 0.25f;
+	gameObject3->getComponent<TransformComponent>()->rotation.z += 2 * 3.14159f * timer->getDeltaTime() * 0.25f;
 }
 
 void GameLoop::render()

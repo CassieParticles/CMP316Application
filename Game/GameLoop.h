@@ -17,5 +17,10 @@ public:
 	void exit() override;
 protected:
 	GameObject* gameObject;
+	GameObject* gameObject2;
+	GameObject* gameObject3;
+
+	int currentScene{};
+
 	GameObject* cameraObject;
 };
