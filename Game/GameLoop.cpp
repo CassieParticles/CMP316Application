@@ -58,6 +58,8 @@ GameLoop::GameLoop():BaseGameLoop("Test window", 1200, 1200)
 	input->setMouseCentred(false);
 	cameraObject->addInputComponent<ControllerComponent>()->setMoveSpeed(5);
 	cameraObject->addUpdateComponent<PlayerMoveComponent>();
+
+	setPlayer(&cameraObject);
 }
 
 GameLoop::~GameLoop()
@@ -72,7 +74,14 @@ void GameLoop::handleInput()
 	if (input->getKeyPressed(GLFW_KEY_G))
 	{
 		std::cout << "Moved object\n";
-		gameObject = scene->moveGameObject(currentScene, 1 - currentScene, gameObject);
+		gameObject = scene->moveGameObject(currentObjectScene, 1 - currentObjectScene, gameObject);
+		currentObjectScene = 1 - currentObjectScene;
+	}
+
+	if (input->getKeyPressed(GLFW_KEY_M))
+	{
+		std::cout << "Moved player\n";
+		cameraObject = scene->moveGameObject(currentScene, 1 - currentScene, cameraObject);
 		currentScene = 1 - currentScene;
 	}
 }

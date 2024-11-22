@@ -21,6 +21,7 @@ protected:
 	GameObject* gameObject3;
 
 	int currentScene{};
+	int currentObjectScene{};
 
 	GameObject* cameraObject;
 };
