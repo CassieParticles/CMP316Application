@@ -14,13 +14,23 @@
 
 GameLoop::GameLoop():BaseGameLoop("Test window", 1200, 1200)
 {
+	//Load assets
+	textureLoader->loadTextureFromFile("Bunny", "Assets/bunny.png");
+	textureLoader->addColour("Red", 1, 0, 0);
+
+
+
 	timer->setMaxFrameRate(150);
+
+
+
 	//Create test game object cube
 	gameObject = scene->createGameObject(0);
 	MeshComponent* mesh = gameObject->addRenderComponent<MeshComponent>();
 	TransformComponent* cubeTrans = gameObject->getComponent<TransformComponent>();
 	cubeTrans->position.z = 2;
 	mesh->setMesh("Cube", meshLoader.get());
+	mesh->setTexture("Red", textureLoader.get());
 
 	TransformComponent* transComp = gameObject->getComponent<TransformComponent>();
 
@@ -33,8 +43,6 @@ GameLoop::GameLoop():BaseGameLoop("Test window", 1200, 1200)
 	input->setMouseCentred(false);
 	cameraObject->addInputComponent<ControllerComponent>()->setMoveSpeed(5);
 	cameraObject->addUpdateComponent<PlayerMoveComponent>();
-
-	textureLoader->addColour("Red", 1, 0, 0);
 }
 
 GameLoop::~GameLoop()
