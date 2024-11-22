@@ -14,5 +14,7 @@ int main()
 		gameLoop.loop();
 	}
 
+	gameLoop.exit();
+
 	return 0;
 }

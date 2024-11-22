@@ -8,7 +8,10 @@
 
 ControllerComponent::ControllerComponent(GameObject* gameObject):InputComponent{gameObject}
 {
-
+	if (!gameObject->getComponent<PlayerMoveComponent>())
+	{
+		gameObject->addUpdateComponent<PlayerMoveComponent>();
+	}
 }
 
 ControllerComponent::ControllerComponent(ControllerComponent& other):InputComponent{other}

@@ -13,10 +13,9 @@ public:
 	void handleInput() override;
 	void update() override;
 	void render() override;
-protected:
-	double time{};
-	bool leftRight = false;
 
+	void exit() override;
+protected:
 	GameObject* gameObject;
 	GameObject* cameraObject;
 };
