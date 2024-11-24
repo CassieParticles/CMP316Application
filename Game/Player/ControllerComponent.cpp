@@ -2,7 +2,7 @@
 
 #include <engine/ObjectStructure/GameObject.h>
 
-#include <glfw3.h>
+#include <GLFW/glfw3.h>
 
 #include "PlayerMoveComponent.h"
 

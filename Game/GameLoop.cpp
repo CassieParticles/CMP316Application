@@ -1,6 +1,6 @@
 #include "GameLoop.h"
 
-#include <glfw3.h>
+#include <GLFW/glfw3.h>
 
 #include <engine/ObjectStructure/GameObject.h>
 #include <engine/Rendering/Components/MeshComponent.h>
@@ -89,17 +89,17 @@ void GameLoop::handleInput()
 void GameLoop::update()
 {
 	BaseGameLoop::update();
-	gameObject->getComponent<TransformComponent>()->rotation.x += 2 * 3.14159f * timer->getDeltaTime() * 0.25f;
-	gameObject->getComponent<TransformComponent>()->rotation.y += 2 * 3.14159f * timer->getDeltaTime() * 0.25f;
-	gameObject->getComponent<TransformComponent>()->rotation.z += 2 * 3.14159f * timer->getDeltaTime() * 0.25f;
+	gameObject->getComponent<TransformComponent>()->rotation.x += 2 * 3.14159f * static_cast<float>(timer->getDeltaTime()) * 0.25f;
+	gameObject->getComponent<TransformComponent>()->rotation.y += 2 * 3.14159f * static_cast<float>(timer->getDeltaTime()) * 0.25f;
+	gameObject->getComponent<TransformComponent>()->rotation.z += 2 * 3.14159f * static_cast<float>(timer->getDeltaTime()) * 0.25f;
 
-	gameObject2->getComponent<TransformComponent>()->rotation.x += 2 * 3.14159f * timer->getDeltaTime() * 0.25f;
-	gameObject2->getComponent<TransformComponent>()->rotation.y += 2 * 3.14159f * timer->getDeltaTime() * 0.25f;
-	gameObject2->getComponent<TransformComponent>()->rotation.z += 2 * 3.14159f * timer->getDeltaTime() * 0.25f;
+	gameObject2->getComponent<TransformComponent>()->rotation.x += 2 * 3.14159f * static_cast<float>(timer->getDeltaTime()) * 0.25f;
+	gameObject2->getComponent<TransformComponent>()->rotation.y += 2 * 3.14159f * static_cast<float>(timer->getDeltaTime()) * 0.25f;
+	gameObject2->getComponent<TransformComponent>()->rotation.z += 2 * 3.14159f * static_cast<float>(timer->getDeltaTime()) * 0.25f;
 
-	gameObject3->getComponent<TransformComponent>()->rotation.x += 2 * 3.14159f * timer->getDeltaTime() * 0.25f;
-	gameObject3->getComponent<TransformComponent>()->rotation.y += 2 * 3.14159f * timer->getDeltaTime() * 0.25f;
-	gameObject3->getComponent<TransformComponent>()->rotation.z += 2 * 3.14159f * timer->getDeltaTime() * 0.25f;
+	gameObject3->getComponent<TransformComponent>()->rotation.x += 2 * 3.14159f * static_cast<float>(timer->getDeltaTime()) * 0.25f;
+	gameObject3->getComponent<TransformComponent>()->rotation.y += 2 * 3.14159f * static_cast<float>(timer->getDeltaTime()) * 0.25f;
+	gameObject3->getComponent<TransformComponent>()->rotation.z += 2 * 3.14159f * static_cast<float>(timer->getDeltaTime()) * 0.25f;
 }
 
 void GameLoop::render()
