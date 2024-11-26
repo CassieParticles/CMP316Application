@@ -6,15 +6,15 @@ list(APPEND GAME "Game/GameLoop.cpp")
 list(APPEND GAME "Game/Player/ControllerComponent.cpp")
 list(APPEND GAME "Game/Player/PlayerMoveComponent.cpp")
 
+list(APPEND GAME "Game/SpinTestComponent.cpp")
+
+
 list(APPEND GAME "main.cpp")
 
 
 project ("App")
 
 add_executable (App  ${GAME})
-
-target_compile_options(App PUBLIC /sanitize=address)
-target_link_options(App PUBLIC /sanitize=address)
 
 add_subdirectory(Non-Reality-Engine)
 target_link_libraries(App PUBLIC NonRealityEngine)

@@ -16,12 +16,19 @@ public:
 
 	void exit() override;
 protected:
-	GameObject* gameObject;
-	GameObject* gameObject2;
-	GameObject* gameObject3;
+
 
 	int currentScene{};
 	int currentObjectScene{};
 
-	GameObject* cameraObject;
+	GameObject* playerObject;
+
+	GameObject* spaceOneFloor;
+	GameObject* spaceOneCube;
+
+	GameObject* spaceTwoFloor;
+	GameObject* spaceTwoCube;
+
+	GameObject* portalA;
+	GameObject* portalB;
 };
