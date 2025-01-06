@@ -5,17 +5,24 @@
 #include <engine/ObjectStructure/GameObject.h>
 #include <engine/Rendering/Components/MeshComponent.h>
 #include <engine/Rendering/Components/PlayerCameraComponent.h>
+
 #include <engine/Rendering/Components/Portal/PortalComponent.h>
+#include <engine/Rendering/Components/Portal/PortalEndComponent.h>
+#include <engine/Rendering/Components/Portal/PortalInternalsComponent.h>
+#include <engine/Rendering/Components/Portal/PortalCameraComponent.h>
 
 #include <graphicsEngine/VectorMathOverloads.h>
 
 #include "Player/ControllerComponent.h"
 #include "Player/PlayerMoveComponent.h"
 #include "SpinTestComponent.h"
-#include <engine/Rendering/Components/Portal/PortalEndComponent.h>
+
+#include <imgui.h>
 
 
-GameLoop::GameLoop():BaseGameLoop("Test window", 1200, 1200)
+
+
+GameLoop::GameLoop():BaseGameLoop("Test window", 1024, 1024)
 {
 	window->changeClearColour(DirectX::XMFLOAT4(0.2, 0.4, 0.6, 1.0));
 	//Load assets
@@ -69,7 +76,7 @@ GameLoop::GameLoop():BaseGameLoop("Test window", 1200, 1200)
 	spaceTwoCube = scene->CreateGameObject(0);
 	MeshComponent* cube2Mesh = spaceTwoCube->addRenderComponent<MeshComponent>();
 	cube2Mesh->setMesh("Cube", meshLoader.get());
-	//cube2Mesh->setTexture("Tom", textureLoader.get());
+	cube2Mesh->setTexture("Tom", textureLoader.get());
 	TransformComponent* cube2Trans = spaceTwoCube->getComponent<TransformComponent>();
 	cube2Trans->position = DirectX::XMFLOAT3(25, 0, 5);
 	cube2Trans->scale = DirectX::XMFLOAT3(1, 1, 1);
@@ -77,20 +84,29 @@ GameLoop::GameLoop():BaseGameLoop("Test window", 1200, 1200)
 
 	//Create the portals
 	portalA = scene->CreateGameObject(0);
-	portalA->addRenderComponent<PortalComponent>();
+	PortalComponent* portalAPortal = portalA->addRenderComponent<PortalComponent>();
 	MeshComponent* portalAMesh = portalA->addRenderComponent<MeshComponent>();
+	portalA->addRenderComponent<PortalCameraComponent>()->setPlayer(playerObject);
+	portalA->addRenderComponent<PortalInternalsComponent>()->SetScene(scene.get());
 	portalA->addRenderComponent<PortalEndComponent>();
 	portalAMesh->setMesh("Quad", meshLoader.get());
 	portalA->getComponent<TransformComponent>()->position = DirectX::XMFLOAT3(5, 0, 0);
 	portalA->getComponent<TransformComponent>()->scale = DirectX::XMFLOAT3(2, 4, 1);
 	
 	portalB = scene->CreateGameObject(0);
-	portalB->addRenderComponent<PortalComponent>();
+	PortalComponent* portalBPortal = portalB->addRenderComponent<PortalComponent>();
 	MeshComponent* portalBMesh = portalB->addRenderComponent<MeshComponent>();
+	portalB->addRenderComponent<PortalCameraComponent>()->setPlayer(playerObject);
+	portalB->addRenderComponent<PortalInternalsComponent>()->SetScene(scene.get());
 	portalB->addRenderComponent<PortalEndComponent>();
 	portalBMesh->setMesh("Quad", meshLoader.get());
 	portalB->getComponent<TransformComponent>()->position = DirectX::XMFLOAT3(25, 0, 0);
 	portalB->getComponent<TransformComponent>()->scale = DirectX::XMFLOAT3(2, 4, 1);
+
+	
+	portalAPortal->linkPortal(portalBPortal);
+	portalBPortal->linkPortal(portalAPortal);
+
 
 }
 
@@ -119,6 +135,18 @@ void GameLoop::update()
 void GameLoop::render()
 {
 	BaseGameLoop::render();
+}
+
+void GameLoop::guiRender()
+{
+	BaseGameLoop::guiRender();
+
+	ImGui::Begin("Test window");
+
+	ImGui::Text("Test window");
+	ImGui::Checkbox("Render portals", &drawPortalInternals);
+
+	ImGui::End();
 }
 
 void GameLoop::exit()

@@ -13,6 +13,7 @@ public:
 	void handleInput() override;
 	void update() override;
 	void render() override;
+	void guiRender() override;
 
 	void exit() override;
 protected:
@@ -20,6 +21,8 @@ protected:
 
 	int currentScene{};
 	int currentObjectScene{};
+
+	bool sceneVisible{ true };
 
 	GameObject* playerObject;
 
