@@ -22,12 +22,13 @@ protected:
 	int currentScene{};
 	int currentObjectScene{};
 
-	bool sceneVisible{ true };
+	bool rotatePortal{ false };
 
 	GameObject* playerObject;
 
 	GameObject* spaceOneFloor;
 	GameObject* spaceOneCube;
+	GameObject* spaceOneCube2;
 
 	GameObject* spaceTwoFloor;
 	GameObject* spaceTwoCube;
