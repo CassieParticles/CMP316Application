@@ -18,6 +18,7 @@
 #include "SpinTestComponent.h"
 
 #include <imgui.h>
+#include <engine/Rendering/Components/Portal/PortalDrawComponent.h>
 
 
 
@@ -88,6 +89,7 @@ GameLoop::GameLoop():BaseGameLoop("Test window", 1024, 1024)
 	MeshComponent* portalAMesh = portalA->addRenderComponent<MeshComponent>();
 	portalA->addRenderComponent<PortalCameraComponent>()->setPlayer(playerObject);
 	portalA->addRenderComponent<PortalInternalsComponent>()->SetScene(scene.get());
+	portalA->addRenderComponent<PortalDrawComponent>();
 	portalA->addRenderComponent<PortalEndComponent>();
 	portalAMesh->setMesh("Quad", meshLoader.get());
 	portalA->getComponent<TransformComponent>()->position = DirectX::XMFLOAT3(5, 0, 0);
@@ -98,6 +100,7 @@ GameLoop::GameLoop():BaseGameLoop("Test window", 1024, 1024)
 	MeshComponent* portalBMesh = portalB->addRenderComponent<MeshComponent>();
 	portalB->addRenderComponent<PortalCameraComponent>()->setPlayer(playerObject);
 	portalB->addRenderComponent<PortalInternalsComponent>()->SetScene(scene.get());
+	portalA->addRenderComponent<PortalDrawComponent>();
 	portalB->addRenderComponent<PortalEndComponent>();
 	portalBMesh->setMesh("Quad", meshLoader.get());
 	portalB->getComponent<TransformComponent>()->position = DirectX::XMFLOAT3(25, 0, 0);
