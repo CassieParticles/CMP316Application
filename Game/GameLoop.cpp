@@ -7,9 +7,6 @@
 #include <engine/Rendering/Components/PlayerCameraComponent.h>
 
 #include <engine/Rendering/Components/Portal/PortalComponent.h>
-#include <engine/Rendering/Components/Portal/PortalEndComponent.h>
-#include <engine/Rendering/Components/Portal/PortalInternalsComponent.h>
-#include <engine/Rendering/Components/Portal/PortalCameraComponent.h>
 
 #include <graphicsEngine/VectorMathOverloads.h>
 
@@ -18,10 +15,6 @@
 #include "SpinTestComponent.h"
 
 #include <imgui.h>
-#include <engine/Rendering/Components/Portal/PortalDrawComponent.h>
-
-
-
 
 GameLoop::GameLoop():BaseGameLoop("Test window", 800, 800)
 {
@@ -44,6 +37,7 @@ GameLoop::GameLoop():BaseGameLoop("Test window", 800, 800)
 	playerObject->addUpdateComponent<PlayerMoveComponent>();
 
 	setPlayer(&playerObject);
+
 
 	//Create the scene
 
@@ -74,54 +68,50 @@ GameLoop::GameLoop():BaseGameLoop("Test window", 800, 800)
 	cube1Trans2->scale = DirectX::XMFLOAT3(1, 1, 1);
 	spaceOneCube2->addUpdateComponent<SpinTestComponent>();
 
-	//Second space
-	spaceTwoFloor = scene->CreateGameObject(1);
-	MeshComponent* floor2Mesh = spaceTwoFloor->addRenderComponent<MeshComponent>();
-	floor2Mesh->setMesh("Plane", meshLoader.get());
-	floor2Mesh->setTexture("Tom", textureLoader.get());
-	TransformComponent* floor2Trans = spaceTwoFloor->getComponent<TransformComponent>();
-	floor2Trans->position = DirectX::XMFLOAT3(0, -2, 0);
-	floor2Trans->scale = DirectX::XMFLOAT3(10, 1, 10);
-
-	spaceTwoCube = scene->CreateGameObject(1);
-	MeshComponent* cube2Mesh = spaceTwoCube->addRenderComponent<MeshComponent>();
-	cube2Mesh->setMesh("Cube", meshLoader.get());
-	cube2Mesh->setTexture("Tom", textureLoader.get());
-	TransformComponent* cube2Trans = spaceTwoCube->getComponent<TransformComponent>();
-	cube2Trans->position = DirectX::XMFLOAT3(8, 0, 8);
-	cube2Trans->scale = DirectX::XMFLOAT3(1, 1, 1);
-	spaceTwoCube->addUpdateComponent<SpinTestComponent>();
-
-	spaceTwoCube2 = scene->CreateGameObject(1);
-	MeshComponent* cube2Mesh2 = spaceTwoCube2->addRenderComponent<MeshComponent>();
-	cube2Mesh2->setMesh("Cube", meshLoader.get());
-	cube2Mesh2->setTexture("Tom", textureLoader.get());
-	TransformComponent* cube2Trans2 = spaceTwoCube2->getComponent<TransformComponent>();
-	cube2Trans2->position = DirectX::XMFLOAT3(2, 0, 2);
-	cube2Trans2->scale = DirectX::XMFLOAT3(1, 1, 1);
-	spaceTwoCube2->addUpdateComponent<SpinTestComponent>();
-
 	//Create the portals
 	portalA = scene->CreateGameObject(0);
 	PortalComponent* portalAPortal = portalA->addRenderComponent<PortalComponent>();
 	MeshComponent* portalAMesh = portalA->addRenderComponent<MeshComponent>();
-	portalA->addRenderComponent<PortalCameraComponent>()->setPlayer(playerObject);
-	portalA->addRenderComponent<PortalInternalsComponent>()->SetScene(scene.get());
-	portalA->addRenderComponent<PortalDrawComponent>();
-	portalA->addRenderComponent<PortalEndComponent>();
+	portalAPortal->setPlayer(playerObject);
+	portalAPortal->SetScene(scene.get());
 	portalAMesh->setMesh("Quad", meshLoader.get());
 	portalA->getComponent<TransformComponent>()->position = DirectX::XMFLOAT3(5, 0, 5);
 	portalA->getComponent<TransformComponent>()->scale = DirectX::XMFLOAT3(4, 4, 1);
-	
-	portalB = scene->CreateGameObject(1);
+
+	//Second space
+	spaceTwoFloor = scene->CreateGameObject(0);
+	MeshComponent* floor2Mesh = spaceTwoFloor->addRenderComponent<MeshComponent>();
+	floor2Mesh->setMesh("Plane", meshLoader.get());
+	floor2Mesh->setTexture("Tom", textureLoader.get());
+	TransformComponent* floor2Trans = spaceTwoFloor->getComponent<TransformComponent>();
+	floor2Trans->position = DirectX::XMFLOAT3(20, -2, 0);
+	floor2Trans->scale = DirectX::XMFLOAT3(10, 1, 10);
+
+	spaceTwoCube = scene->CreateGameObject(0);
+	MeshComponent* cube2Mesh = spaceTwoCube->addRenderComponent<MeshComponent>();
+	cube2Mesh->setMesh("Cube", meshLoader.get());
+	cube2Mesh->setTexture("Tom", textureLoader.get());
+	TransformComponent* cube2Trans = spaceTwoCube->getComponent<TransformComponent>();
+	cube2Trans->position = DirectX::XMFLOAT3(28, 0, 8);
+	cube2Trans->scale = DirectX::XMFLOAT3(1, 1, 1);
+	spaceTwoCube->addUpdateComponent<SpinTestComponent>();
+
+	spaceTwoCube2 = scene->CreateGameObject(0);
+	MeshComponent* cube2Mesh2 = spaceTwoCube2->addRenderComponent<MeshComponent>();
+	cube2Mesh2->setMesh("Cube", meshLoader.get());
+	cube2Mesh2->setTexture("Tom", textureLoader.get());
+	TransformComponent* cube2Trans2 = spaceTwoCube2->getComponent<TransformComponent>();
+	cube2Trans2->position = DirectX::XMFLOAT3(22, 0, 2);
+	cube2Trans2->scale = DirectX::XMFLOAT3(1, 1, 1);
+	spaceTwoCube2->addUpdateComponent<SpinTestComponent>();
+
+	portalB = scene->CreateGameObject(0);
 	PortalComponent* portalBPortal = portalB->addRenderComponent<PortalComponent>();
 	MeshComponent* portalBMesh = portalB->addRenderComponent<MeshComponent>();
-	portalB->addRenderComponent<PortalCameraComponent>()->setPlayer(playerObject);
-	portalB->addRenderComponent<PortalInternalsComponent>()->SetScene(scene.get());
-	portalB->addRenderComponent<PortalDrawComponent>();
-	portalB->addRenderComponent<PortalEndComponent>();
+	portalBPortal->setPlayer(playerObject);
+	portalBPortal->SetScene(scene.get());
 	portalBMesh->setMesh("Quad", meshLoader.get());
-	portalB->getComponent<TransformComponent>()->position = DirectX::XMFLOAT3(5, 0, 5);
+	portalB->getComponent<TransformComponent>()->position = DirectX::XMFLOAT3(25, 0, 5);
 	portalB->getComponent<TransformComponent>()->rotation = DirectX::XMFLOAT3(0, 3.14159f, 0);
 	portalB->getComponent<TransformComponent>()->scale = DirectX::XMFLOAT3(4, 4, 1);
 
