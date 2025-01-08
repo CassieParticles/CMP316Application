@@ -32,6 +32,7 @@ protected:
 
 	GameObject* spaceTwoFloor;
 	GameObject* spaceTwoCube;
+	GameObject* spaceTwoCube2;
 
 	GameObject* portalA;
 	GameObject* portalB;
