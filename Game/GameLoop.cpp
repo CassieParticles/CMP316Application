@@ -149,6 +149,11 @@ void GameLoop::update()
 	}
 }
 
+void GameLoop::physUpdate()
+{
+	BaseGameLoop::physUpdate();
+}
+
 void GameLoop::render()
 {
 	BaseGameLoop::render();

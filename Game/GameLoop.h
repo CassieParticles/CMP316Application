@@ -12,6 +12,7 @@ public:
 
 	void handleInput() override;
 	void update() override;
+	void physUpdate() override;
 	void render() override;
 	void guiRender() override;
 
