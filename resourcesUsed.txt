@@ -1,1 +1,2 @@
 https://terathon.com/lengyel/Lengyel-Oblique.pdf - Oblique near view projection matrices
+https://danielsieger.com/blog/2021/03/27/generating-spheres.html - Generating icosphere

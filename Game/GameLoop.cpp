@@ -7,6 +7,7 @@
 #include <engine/Rendering/Components/PlayerCameraComponent.h>
 
 #include <engine/Rendering/Components/Portal/PortalComponent.h>
+#include <engine/Physics/PortalSurfaceCollider.h>
 
 #include <graphicsEngine/VectorMathOverloads.h>
 
@@ -24,14 +25,14 @@ GameLoop::GameLoop():BaseGameLoop("Test window", 800, 800)
 	textureLoader->loadTextureFromFile("Tom", "Assets/Scom tott.png");
 	textureLoader->addColour("Red", 1, 0, 0);
 
-	timer->setMaxFrameRate(150);
+	timer->setMaxFrameRate(60);
 
 	//Create player
 	playerObject = scene->CreateGameObject(0);
 	TransformComponent* cameraTrans = playerObject->getComponent<TransformComponent>();
 	cameraTrans->position = { 5,0,-2 };
 	PlayerCameraComponent* camera = playerObject->addRenderComponent<PlayerCameraComponent>();
-	camera->setProjectionMatrixPespective(89.9 * 3.14159f / 180, window->getAspectRatio(), 0.1f, 1000.f);
+	camera->setProjectionMatrixPespective(89.9 * 3.14159f / 180, window->getAspectRatio(), 0.01f, 1000.f);
 	input->setMouseCentred(false);
 	playerObject->addInputComponent<ControllerComponent>()->setMoveSpeed(5);
 	playerObject->addUpdateComponent<PlayerMoveComponent>();
@@ -52,7 +53,7 @@ GameLoop::GameLoop():BaseGameLoop("Test window", 800, 800)
 
 	spaceOneCube = scene->CreateGameObject(0);
 	MeshComponent* cube1Mesh = spaceOneCube->addRenderComponent<MeshComponent>();
-	cube1Mesh->setMesh("Cube", meshLoader.get());
+	cube1Mesh->setMesh("Sphere", meshLoader.get());
 	cube1Mesh->setTexture("Bunny", textureLoader.get());
 	TransformComponent* cube1Trans = spaceOneCube->getComponent<TransformComponent>();
 	cube1Trans->position = DirectX::XMFLOAT3(2, 0, 8);
@@ -61,7 +62,7 @@ GameLoop::GameLoop():BaseGameLoop("Test window", 800, 800)
 
 	spaceOneCube2 = scene->CreateGameObject(0);
 	MeshComponent* cube1Mesh2 = spaceOneCube2->addRenderComponent<MeshComponent>();
-	cube1Mesh2->setMesh("Cube", meshLoader.get());
+	cube1Mesh2->setMesh("Sphere", meshLoader.get());
 	cube1Mesh2->setTexture("Bunny", textureLoader.get());
 	TransformComponent* cube1Trans2 = spaceOneCube2->getComponent<TransformComponent>();
 	cube1Trans2->position = DirectX::XMFLOAT3(8, 0, 2);
@@ -72,6 +73,7 @@ GameLoop::GameLoop():BaseGameLoop("Test window", 800, 800)
 	portalA = scene->CreateGameObject(0);
 	PortalComponent* portalAPortal = portalA->addRenderComponent<PortalComponent>();
 	MeshComponent* portalAMesh = portalA->addRenderComponent<MeshComponent>();
+	portalA->addPhysicsComponent<PortalSurfaceCollider>();
 	portalAPortal->setPlayer(playerObject);
 	portalAPortal->SetScene(scene.get());
 	portalAMesh->setMesh("Quad", meshLoader.get());
@@ -89,7 +91,7 @@ GameLoop::GameLoop():BaseGameLoop("Test window", 800, 800)
 
 	spaceTwoCube = scene->CreateGameObject(0);
 	MeshComponent* cube2Mesh = spaceTwoCube->addRenderComponent<MeshComponent>();
-	cube2Mesh->setMesh("Cube", meshLoader.get());
+	cube2Mesh->setMesh("Sphere", meshLoader.get());
 	cube2Mesh->setTexture("Tom", textureLoader.get());
 	TransformComponent* cube2Trans = spaceTwoCube->getComponent<TransformComponent>();
 	cube2Trans->position = DirectX::XMFLOAT3(28, 0, 8);
@@ -98,7 +100,7 @@ GameLoop::GameLoop():BaseGameLoop("Test window", 800, 800)
 
 	spaceTwoCube2 = scene->CreateGameObject(0);
 	MeshComponent* cube2Mesh2 = spaceTwoCube2->addRenderComponent<MeshComponent>();
-	cube2Mesh2->setMesh("Cube", meshLoader.get());
+	cube2Mesh2->setMesh("Sphere", meshLoader.get());
 	cube2Mesh2->setTexture("Tom", textureLoader.get());
 	TransformComponent* cube2Trans2 = spaceTwoCube2->getComponent<TransformComponent>();
 	cube2Trans2->position = DirectX::XMFLOAT3(22, 0, 2);
@@ -108,6 +110,7 @@ GameLoop::GameLoop():BaseGameLoop("Test window", 800, 800)
 	portalB = scene->CreateGameObject(0);
 	PortalComponent* portalBPortal = portalB->addRenderComponent<PortalComponent>();
 	MeshComponent* portalBMesh = portalB->addRenderComponent<MeshComponent>();
+	portalB->addPhysicsComponent<PortalSurfaceCollider>();
 	portalBPortal->setPlayer(playerObject);
 	portalBPortal->SetScene(scene.get());
 	portalBMesh->setMesh("Quad", meshLoader.get());
